@@ -1,3 +1,4 @@
 FROM mcr.microsoft.com/devcontainers/base:bullseye
 
-RUN vagrant plugin install vagrant-libvirt
+RUN apt updarte && apt install -y vagrant && vagrant plugin install vagrant-libvirt
+
