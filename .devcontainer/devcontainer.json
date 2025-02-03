@@ -9,10 +9,10 @@
 	},
 
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/hspaans/devcontainer-features/ansible-lint:1": {},
 		"ghcr.io/devcontainers-extra/features/ansible:2": {},
-		"ghcr.io/devcontainers-extra/features/zsh-plugins:0": {}
+		"ghcr.io/devcontainers-extra/features/zsh-plugins:0": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 	"customizations": {
 		"vscode": {
@@ -26,7 +26,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
+s
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "docker --version",
 
@@ -42,5 +42,5 @@
 	"containerEnv": {
 		"ANSIBLE_ROLES_PATH": "/home/vscode/.ansible/roles:/ansible/roles"
 	},
-	"postStartCommand": "ansible-galaxy install -r /ansible/roles/lpi_code.metatrader/requirements.yml"
+	"postStartCommand": "pip install -r .devcontainer/dev-requirements.txt && ansible-galaxy install -r /ansible/roles/lpi_code.metatrader/requirements.yml"
 }
