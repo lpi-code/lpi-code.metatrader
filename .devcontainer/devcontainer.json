@@ -25,9 +25,9 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-s
-	// Use 'postCreateCommand' to run commands after the container is created.
+// "forwardPorts": [],
+
+// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "docker --version",
 
 	// Configure tool-specific properties.
