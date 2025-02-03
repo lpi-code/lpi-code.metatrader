@@ -37,10 +37,10 @@
 	// "remoteUser": "root"
 
 	// Set the mount point for the workspace in the container.
-	"workspaceMount": "source=${localWorkspaceFolder},target=/ansible/collections/ansible_collections/lpi_code/metatrader,type=bind",
-	"workspaceFolder": "/ansible/collections/ansible_collections/lpi_code/metatrader",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/ansible/roles/lpi_code.metatrader,type=bind",
+	"workspaceFolder": "/ansible/roles/lpi_code.metatrader",
 	"containerEnv": {
-		"ANSIBLE_COLLECTIONS_PATHS": "/home/vscode/.ansible/collections/ansible_collections:/ansible/collections/ansible_collections"
+		"ANSIBLE_ROLES_PATH": "/home/vscode/.ansible/roles:/ansible/roles"
 	},
-	"postStartCommand": "ansible-galaxy collection install -r /ansible/collections/ansible_collections/lpi_code/metatrader/requirements.yml"
+	"postStartCommand": "ansible-galaxy install -r /ansible/roles/lpi_code.metatrader/requirements.yml"
 }
