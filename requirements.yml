@@ -4,3 +4,8 @@ roles:
   
   - name: robertdebock.xrdp
     version: 2.1.9
+  - name: robertdebock.bootstrap
+  - name: robertdebock.core_dependencies
+  - name: robertdebock.epel
+collections:
+  - name: community.general
