@@ -1,8 +1,0 @@
----
-platforms:
-  - name: Ubuntu
-    image: ubuntu:22.04
-dependency:
-  name: galaxy
-  options:
-    requirements-file: requirements.yml

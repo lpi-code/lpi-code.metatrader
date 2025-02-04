@@ -1,3 +1,6 @@
 roles:
   - name: boutetnico.xfce
     version: 2.0.0
+  
+  - name: robertdebock.xrdp
+    version: 2.1.9

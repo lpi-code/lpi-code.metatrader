@@ -1,2 +1,5 @@
 ---
 # tasks file for lpi_code.metatrader
+- name: Install xfce
+  ansible.builtin.include_role:
+    name: boutetnico.xfce
