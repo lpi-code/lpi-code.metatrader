@@ -1,5 +1,5 @@
 ---
-# defaults file for lpi_code.metatrader
+# defaults file for lpi-code.metatrader
 metatrader_user: metatrader
 metatrader_password: metatrader
 metatrader_group: metatrader

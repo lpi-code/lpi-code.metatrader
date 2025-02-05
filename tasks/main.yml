@@ -1,5 +1,5 @@
 ---
-# tasks file for lpi_code.metatrader
+# tasks file for lpi-code.metatrader
 - name: Gather facts
   ansible.builtin.setup:
     gather_subset:

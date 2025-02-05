@@ -2,7 +2,7 @@
 
 # 📃 Role overview
 
-## lpi_code.metatrader
+## lpi-code.metatrader
 
 
 
@@ -102,17 +102,17 @@ classDef rescue stroke:#665352,stroke-width:2px;
 - hosts: localhost
   remote_user: root
   roles:
-    - lpi_code.metatrader
+    - lpi-code.metatrader
 
 ```
 ## Playbook graph
 ```mermaid
 flowchart TD
-  localhost-->|Role| lpi_code_metatrader[lpi code metatrader]
+  localhost-->|Role| lpi-code_metatrader[lpi code metatrader]
 ```
 
 ## Author Information
-lpi_code
+lpi-code
 
 #### License
 

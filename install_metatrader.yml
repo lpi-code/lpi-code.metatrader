@@ -5,7 +5,7 @@
   tasks:
     - name: Include role 
       ansible.builtin.include_role:
-        name: lpi_code.metatrader
+        name: lpi-code.metatrader
       vars:
         metatrader_nb_profiles: "{{ lookup('env', 'METATRADER_NB_PROFILES') | default(1) }}"
         meta_trader_user: "{{ lookup('env', 'METATRADER_USER') | default('metatrader') }}"
