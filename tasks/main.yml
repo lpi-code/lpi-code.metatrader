@@ -4,16 +4,29 @@
   ansible.builtin.setup:
     gather_subset:
       - all
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
 
 - name: Install xfce
   ansible.builtin.include_role:
-    name: boutetnico.xfce
+    name: webofmars.xfce4-desktop
+  vars:
+    xfce4_login_manager_package: lightdm
+    xfce4_login_manager_service: lightdm
+    xfce4_packages:
+      - xserver-xorg
+      - xfonts-base
+      - xfce4
+      - xfce4-goodies
 
-- name: Install dbusx11 and wget
+
+- name: Install dependencies
   ansible.builtin.package:
     name: 
       - dbus-x11
-      - wget
+      - xvfb
     state: present
 
 - name: Install xrdp
@@ -43,9 +56,50 @@
     group: "{{ metatrader_group }}"
     mode: '0755'
 
+- name: Install winehq
+  ansible.builtin.include_role:
+    name: jakoblichterfeld.winehq
+  vars:
+    winehq:
+      install_playonlinux: false
+      install_winetricks: false
+      use_devel: false
+      use_staging: false
+
+- name: Download metatrader installer and webview
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: /tmp/{{ item | basename }}
+    mode: '0755'
+  with_items: 
+    - "{{ metatrader_mt5_url }}"
+    - "{{ metatrader_webview_url }}"
+
+
 - name: Install metatrader profile(s)
   ansible.builtin.script:
-    cmd: files/mt5{{ ansible_distribution | lower }}.sh {{ metatrader_user }} {{ item }} {{ metatrader_home }}
+    cmd: files/mt5{{ ansible_distribution | lower }}.sh {{ item }}
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: item
+  become: true
+  become_user: "{{ metatrader_user }}"
+
+- name: Edit desktop shortcut for Editor to include name
+  ansible.builtin.replace:
+    path: "{{ metatrader_home }}/Desktop/MetaEditor 5 - {{ item }}.desktop"
+    regexp: 'Name=MetaEditor 5'
+    replace: 'Name=MetaEditor 5 - {{ item }}'
+  with_sequence: start=1 end={{ metatrader_nb_profiles }}
+  loop_control:
+    loop_var: item
+
+- name: Edit desktop shortcut for Trader to include name
+  ansible.builtin.replace:
+    path: "{{ metatrader_home }}/Desktop/MetaTrader 5 - {{ item }}.desktop"
+    regexp: 'Name=MetaTrader 5'
+    replace: 'Name=MetaTrader 5 - {{ item }}'
+  with_sequence: start=1 end={{ metatrader_nb_profiles }}
+  loop_control:
+    loop_var: item
+  
