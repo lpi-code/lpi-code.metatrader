@@ -1,2 +1,7 @@
 ---
 # defaults file for lpi_code.metatrader
+metatrader_user: metatrader
+metatrader_password: metatrader
+metatrader_group: metatrader
+metatrader_home: /home/metatrader
+metatrader_nb_profiles: 1
