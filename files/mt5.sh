@@ -10,8 +10,11 @@ unset XDG_RUNTIME_DIR
 
 
 # Set environment to Windows 10
-env -i WINEPREFIX=$WINEPREFIX winecfg -v=win10 
+WINEPREFIX=$WINEPREFIX winetricks -q win10
 # Install WebView2 Runtime
+
+Xvfb :99 -screen 0 1024x768x24 -nolisten tcp &
+sleep 5
 export DISPLAY=:99.0
 
 WINEPREFIX=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/MicrosoftEdgeWebview2Setup.exe /silent /install

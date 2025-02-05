@@ -7,5 +7,5 @@
       ansible.builtin.include_role:
         name: lpi_code.metatrader
       vars:
-        metatrader_nb_profiles: 5
+        metatrader_nb_profiles: 2
         metatrader_password: '123'

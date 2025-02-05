@@ -27,6 +27,7 @@
     name: 
       - dbus-x11
       - xvfb
+      - wget
     state: present
 
 - name: Install xrdp
@@ -38,7 +39,7 @@
     name: "{{ metatrader_group }}"
     state: present
 
-- name: Add user
+- name: Add users
   ansible.builtin.user:
     name: "{{ metatrader_user }}"
     password: "{{ metatrader_password | password_hash('sha512') }}"
@@ -62,7 +63,7 @@
   vars:
     winehq:
       install_playonlinux: false
-      install_winetricks: false
+      install_winetricks: true
       use_devel: false
       use_staging: false
 
@@ -75,15 +76,6 @@
     - "{{ metatrader_mt5_url }}"
     - "{{ metatrader_webview_url }}"
 
-- name: Start xvfb
-  ansible.builtin.shell:
-    cmd: 'Xvfb :99 -screen 0 1024x768x24'
-    creates: /tmp/.X99-lock
-  become: true
-  become_user: "{{ metatrader_user }}"
-  async: "{{ metatrader_nb_profiles * 500}}"
-  poll: 5
-
 - name: Install metatrader profile(s)
   ansible.builtin.script:
     cmd: files/mt5.sh {{ item }}
@@ -92,17 +84,6 @@
     loop_var: item
   become: true
   become_user: "{{ metatrader_user }}"
-
-- name: Find Xvfb process
-  ansible.builtin.pids:
-    pattern: Xvfb
-  register: xvfb_process
-
-- name: Kill Xvfb process
-  ansible.builtin.command:
-    cmd: 'kill -9 {{ item.pid }}'
-  with_items: "{{ xvfb_process.pids }}"
-  when: xvfb_process.pids | length > 0
 
 - name: Edit desktop shortcut for Editor to include name
   ansible.builtin.replace:
