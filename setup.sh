@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-set -x
+set -xeuo pipefail
 
 sudo apt update
 
 sudo apt install -y ansible python3-venv curl git
 
-git clone https://github.com/lpi-code/lpi_code.metatraders.git
+git clone https://github.com/lpi-code/lpi_code.metatrader.git 
 
-cd lpi_code.metatraders
+cd lpi_code.metatrader
 
 python3 -m venv .venv
 
