@@ -14,6 +14,14 @@
     name: gdm3
     state: absent
 
+- name: Enforce XFCE session for user 'vagrant'
+  copy:
+    dest: /home/vagrant/.xsession
+    content: "/usr/bin/xfce4-session\n"
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0755'
+
 - name: Install xfce
   ansible.builtin.include_role:
     name: webofmars.xfce4-desktop
