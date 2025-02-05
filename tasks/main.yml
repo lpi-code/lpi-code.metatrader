@@ -18,6 +18,7 @@
   ansible.builtin.alternatives:
     name: x-session-manager
     path: /usr/bin/xfce4-session
+    link: /usr/bin/x-session-manager
     state: present
     priority: 60
 
