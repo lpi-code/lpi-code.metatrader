@@ -78,7 +78,7 @@
 
 - name: Install metatrader profile(s)
   ansible.builtin.script:
-    cmd: files/mt5{{ ansible_distribution | lower }}.sh {{ item }}
+    cmd: files/mt5.sh {{ item }}
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: item
