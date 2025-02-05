@@ -1,5 +1,6 @@
 #!/bin/bash
 
+figlet -f slant "MetaTrader Installer"
 # Prompt for required environment variables
 echo "Enter the number of MetaTrader profiles (default: 1):"
 read METATRADER_NB_PROFILES
