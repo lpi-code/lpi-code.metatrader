@@ -14,5 +14,3 @@ python3 -m venv .venv
 pip insfall -r dev-requirements.txt
 ansible-galaxy install -r requirements.yml
 ansible-galaxy role install lpi_code.metatrader
-
-source launch.sh
