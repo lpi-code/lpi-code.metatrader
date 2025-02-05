@@ -18,7 +18,7 @@
   ansible.builtin.alternatives:
     name: x-session-manager
     path: /usr/bin/xfce4-session
-    state: manual
+    state: present
     priority: 60
 
 - name: Install xfce
