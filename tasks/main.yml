@@ -1,5 +1,51 @@
 ---
 # tasks file for lpi_code.metatrader
+- name: Gather facts
+  ansible.builtin.setup:
+    gather_subset:
+      - all
+
 - name: Install xfce
   ansible.builtin.include_role:
     name: boutetnico.xfce
+
+- name: Install dbusx11 and wget
+  ansible.builtin.package:
+    name: 
+      - dbus-x11
+      - wget
+    state: present
+
+- name: Install xrdp
+  ansible.builtin.include_role:
+    name: robertdebock.xrdp
+
+- name: Create group
+  ansible.builtin.group:
+    name: "{{ metatrader_group }}"
+    state: present
+
+- name: Add user
+  ansible.builtin.user:
+    name: "{{ metatrader_user }}"
+    password: "{{ metatrader_password }}"
+    group: "{{ metatrader_group }}"
+    home: "{{ metatrader_home }}"
+    shell: /bin/bash
+    createhome: true
+    state: present
+
+- name: Create Deskop folder
+  ansible.builtin.file:
+    dest: "{{ metatrader_home }}/Desktop"
+    state: directory
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0755'
+
+- name: Install metatrader profile(s)
+  ansible.builtin.script:
+    cmd: files/mt5{{ ansible_distribution | lower }}.sh {{ metatrader_user }} {{ item }} {{ metatrader_home }}
+  with_sequence: start=1 end={{ metatrader_nb_profiles }}
+  loop_control:
+    loop_var: item
