@@ -2,6 +2,15 @@
 
 # 📃 Role overview
 
+## Quick Start
+
+To install metatrader 5 on Ubuntu or Debian target host (or any other machine with ssh access to the target), run the following command:
+
+```bash
+ curl https://raw.githubusercontent.com/lpi-code/lpi_code.metatrader/refs/heads/main/setup.sh | bash && cd lpi-code.metatrader && bash launch.sh
+```
+
+
 ## lpi-code.metatrader
 
 
