@@ -13,6 +13,6 @@ cd lpi-code.metatrader
 
 python3 -m venv .venv
 
-pip install -r dev-requirements.txt
+pip install -r .devcontainer/dev-requirements.txt
 ansible-galaxy install -r requirements.yml
 ansible-galaxy role install lpi-code.metatrader
