@@ -14,6 +14,8 @@
         state: started
         command: sleep 1d
         log_driver: json-file
+        exposed_ports: "{{ item.exposed_ports }}"
+        published_ports: "{{ item.published_ports }}"
       register: result
       loop: "{{ molecule_yml.platforms }}"
 
