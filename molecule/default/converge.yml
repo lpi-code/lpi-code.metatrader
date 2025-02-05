@@ -8,3 +8,4 @@
         name: lpi_code.metatrader
       vars:
         metatrader_nb_profiles: 5
+        metatrader_password: '123'

@@ -41,7 +41,7 @@
 - name: Add user
   ansible.builtin.user:
     name: "{{ metatrader_user }}"
-    password: "{{ metatrader_password }}"
+    password: "{{ metatrader_password | password_hash('sha512') }}"
     group: "{{ metatrader_group }}"
     home: "{{ metatrader_home }}"
     shell: /bin/bash
@@ -76,11 +76,13 @@
     - "{{ metatrader_webview_url }}"
 
 - name: Start xvfb
-  ansible.builtin.command:
-    cmd: Xvfb :99 -screen 0 1024x768x24 &
+  ansible.builtin.shell:
+    cmd: 'Xvfb :99 -screen 0 1024x768x24'
+    creates: /tmp/.X99-lock
   become: true
   become_user: "{{ metatrader_user }}"
-  changed_when: false
+  async: "{{ metatrader_nb_profiles * 500}}"
+  poll: 5
 
 - name: Install metatrader profile(s)
   ansible.builtin.script:
@@ -91,12 +93,16 @@
   become: true
   become_user: "{{ metatrader_user }}"
 
-- name: Kill xvfb
+- name: Find Xvfb process
+  ansible.builtin.pids:
+    pattern: Xvfb
+  register: xvfb_process
+
+- name: Kill Xvfb process
   ansible.builtin.command:
-    cmd: pskill -f 'Xvfb :99'
-  become: true
-  become_user: "{{ metatrader_user }}"
-  changed_when: false
+    cmd: 'kill -9 {{ item.pid }}'
+  with_items: "{{ xvfb_process.pids }}"
+  when: xvfb_process.pids | length > 0
 
 - name: Edit desktop shortcut for Editor to include name
   ansible.builtin.replace:

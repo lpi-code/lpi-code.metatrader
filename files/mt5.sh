@@ -4,14 +4,19 @@ set -x
 export WINEPREFIX=$HOME/.mt5_$1
 
 
+unset DISPLAY
+unset XAUTHORITY
+unset XDG_RUNTIME_DIR
 
 
 # Set environment to Windows 10
-WINEPREFIX=$WINEPREFIX winecfg -v=win10
+env -i WINEPREFIX=$WINEPREFIX winecfg -v=win10 
 # Install WebView2 Runtime
-WINEPREFIX=$WINEPREFIX DISPLAY=:99.0 wine /tmp/MicrosoftEdgeWebview2Setup.exe /silent /install
+export DISPLAY=:99.0
+
+WINEPREFIX=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/MicrosoftEdgeWebview2Setup.exe /silent /install
 # Start MetaTrader installer
-WINEPREFIX=$WINEPREFIX DISPLAY=:99.0 XDG_RUNTIME_DIR=$WINEPREFIX wine /tmp/mt5setup.exe /auto
+WINEPREFIX=$WINEPREFIX XDG_RUNTIME_DIR=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/mt5setup.exe /auto
 
 # Move Desktop shortcuts
 cd $HOME/Desktop
