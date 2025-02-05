@@ -19,7 +19,8 @@
 			"extensions": [
 				"ZainChen.json",
 				"redhat.ansible",
-				"wholroyd.jinja"
+				"wholroyd.jinja",
+				"ardisaurus.gitflow-actions-sidebar"
 			]
 		}
 	},
