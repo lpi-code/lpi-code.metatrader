@@ -75,6 +75,12 @@
     - "{{ metatrader_mt5_url }}"
     - "{{ metatrader_webview_url }}"
 
+- name: Start xvfb
+  ansible.builtin.command:
+    cmd: Xvfb :99 -screen 0 1024x768x24 &
+  become: true
+  become_user: "{{ metatrader_user }}"
+  changed_when: false
 
 - name: Install metatrader profile(s)
   ansible.builtin.script:
@@ -84,6 +90,13 @@
     loop_var: item
   become: true
   become_user: "{{ metatrader_user }}"
+
+- name: Kill xvfb
+  ansible.builtin.command:
+    cmd: pskill -f 'Xvfb :99'
+  become: true
+  become_user: "{{ metatrader_user }}"
+  changed_when: false
 
 - name: Edit desktop shortcut for Editor to include name
   ansible.builtin.replace:
