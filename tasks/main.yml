@@ -34,7 +34,28 @@
   ansible.builtin.dpkg_selections:
     name: ubuntu-desktop
     selection: hold
-  when: ansible_distribution == 'Ubuntu'
+
+- name: Install lightdm
+  ansible.builtin.package:
+    name: lightdm
+    state: present
+
+- name: Set lightdm as default login manager
+  ansible.builtin.debconf:
+    name: lightdm
+    question: lightdm/daemon_name
+    vtype: string
+    value: lightdm
+
+- name: Set /etc/X11/default-display-manager to lightdm
+  ansible.builtin.copy:
+    content: /usr/sbin/lightdm
+    dest: /etc/X11/default-display-manager
+    owner: root
+    group: root
+    mode: '0644'
+  failed_when: false
+
 
 - name: Install xfce
   ansible.builtin.include_role:
@@ -67,6 +88,13 @@
 - name: Install xrdp
   ansible.builtin.include_role:
     name: robertdebock.xrdp
+
+- name: Set RDP display resolution
+  ansible.builtin.replace:
+    dest: /etc/xrdp/xrdp.ini
+    regexp: '^max_bpp=32'
+    replace: 'max_bpp=24'
+
 
 - name: Create group
   ansible.builtin.group:
