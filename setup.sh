@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -xeuo pipefail
 
-sudo apt update
+sudo apt-get update
 
-sudo apt install -y ansible python3-venv curl git figlet
+sudo apt-get install -y ansible python3-venv curl git figlet
 
 if [ ! -d "lpi-code.metatrader" ]; then
     git clone https://github.com/lpi-code/lpi-code.metatrader.git
