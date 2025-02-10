@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -xeuo pipefail
 
 export WINEPREFIX=$HOME/.mt5_$1
 
@@ -7,7 +7,6 @@ export WINEPREFIX=$HOME/.mt5_$1
 unset DISPLAY
 unset XAUTHORITY
 unset XDG_RUNTIME_DIR
-
 
 # Set environment to Windows 10
 WINEPREFIX=$WINEPREFIX winetricks -q win10
