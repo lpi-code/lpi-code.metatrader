@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 set -xeuo pipefail
-# make apt non-interactive
-export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update
 
-sudo apt-get install -y ansible python3-venv curl git figlet
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ansible python3-venv curl git figlet
 
 if [ ! -d "lpi-code.metatrader" ]; then
     git clone https://github.com/lpi-code/lpi-code.metatrader.git
