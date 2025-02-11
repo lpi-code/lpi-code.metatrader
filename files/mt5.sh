@@ -18,7 +18,7 @@ export DISPLAY=:99.0
 
 WINEPREFIX=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/MicrosoftEdgeWebview2Setup.exe /silent /install
 # Start MetaTrader installer
-WINEPREFIX=$WINEPREFIX XDG_RUNTIME_DIR=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/mt5setup.exe /auto
+WINEPREFIX=$WINEPREFIX XDG_RUNTIME_DIR=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/mt5setup.exe /auto || true
 
 # Move Desktop shortcuts
 cd $HOME/Desktop
