@@ -9,32 +9,6 @@
     update_cache: yes
   when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
 
-
-- name: Check if package name is gdm or gdm3
-  ansible.builtin.shell: "apt search gdm | grep gdm"
-  register: gdm_package
-  failed_when: false
-  changed_when: false
-
-- name: Set gdm package name
-  set_fact:
-    gdm_package_name: "{{ 'gdm3' if 'gdm3' in gdm_package.stdout else 'gdm' }}"
-
-- name: Remove gdm
-  ansible.builtin.package:
-    name: "{{ gdm_package_name }}"
-    state: absent
-
-- name: Blacklist gdm from being installed
-  ansible.builtin.dpkg_selections:
-    name: "{{ gdm_package_name }}"
-    selection: hold
-
-- name: Blacklist ubuntu-desktop from being installed
-  ansible.builtin.dpkg_selections:
-    name: ubuntu-desktop
-    selection: hold
-
 - name: Install lightdm
   ansible.builtin.package:
     name: lightdm
