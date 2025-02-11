@@ -112,9 +112,18 @@
     - "{{ metatrader_mt5_url }}"
     - "{{ metatrader_webview_url }}"
 
+- name: Copy script to install metatrader
+  ansible.builtin.copy:
+    src: files/mt5.sh
+    dest: /tmp/mt5.sh
+    mode: '0755'
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+
+
 - name: Install metatrader profile(s)
-  ansible.builtin.script:
-    cmd: files/mt5.sh {{ item }}
+  ansible.builtin.shell:
+    cmd: /tmp/mt5.sh {{ item }} > /tmp/mt5-{{ item }}.log
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: item
