@@ -124,6 +124,7 @@
 - name: Install metatrader profile(s)
   ansible.builtin.shell:
     cmd: /tmp/mt5.sh {{ item }} > /tmp/mt5-{{ item }}.log
+    creates: "{{ metatrader_home }}/.mt5_{{ item }}/drive_c/Program Files/MetaTrader 5/MetaEditor64.exe"
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: item
