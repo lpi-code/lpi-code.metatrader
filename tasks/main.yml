@@ -87,7 +87,7 @@
 
 - name: Create Deskop folder
   ansible.builtin.file:
-    dest: "{{ metatrader_home }}/Desktop"
+    dest: "{{ metatrader_home | default('/home/' + metatrader_user) }}/Desktop"
     state: directory
     owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
