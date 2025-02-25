@@ -75,19 +75,24 @@
     name: "{{ metatrader_group }}"
     state: present
 
+- name: Set metatrader_home
+  ansible.builtin.set_fact:
+    metatrader_home: "/home/{{ metatrader_user }}"
+  when: metatrader_home is not defined
+
 - name: Add users
   ansible.builtin.user:
     name: "{{ metatrader_user }}"
     password: "{{ metatrader_password | password_hash('sha512') }}"
     group: "{{ metatrader_group }}"
-    home: "{{ metatrader_home | default('/home/' + metatrader_user) }}"
+    home: "{{ metatrader_home }}"
     shell: /bin/bash
     createhome: true
     state: present
 
 - name: Create Deskop folder
   ansible.builtin.file:
-    dest: "{{ metatrader_home | default('/home/' + metatrader_user) }}/Desktop"
+    dest: "{{ metatrader_home }}/Desktop"
     state: directory
     owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
