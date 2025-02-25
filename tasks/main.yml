@@ -70,15 +70,21 @@
     replace: 'max_bpp=24'
 
 
-- name: Create group
-  ansible.builtin.group:
-    name: "{{ metatrader_group }}"
-    state: present
 
 - name: Set metatrader_home
   ansible.builtin.set_fact:
     metatrader_home: "/home/{{ metatrader_user }}"
   when: metatrader_home is not defined
+
+- name: Set metatrader group
+  ansible.builtin.set_fact:
+    metatrader_group: "{{ metatrader_user }}"
+  when: metatrader_group is not defined
+
+- name: Create group
+  ansible.builtin.group:
+    name: "{{ metatrader_group }}"
+    state: present
 
 - name: Add users
   ansible.builtin.user:
