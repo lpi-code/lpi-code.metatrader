@@ -80,7 +80,7 @@
     name: "{{ metatrader_user }}"
     password: "{{ metatrader_password | password_hash('sha512') }}"
     group: "{{ metatrader_group }}"
-    home: "{{ metatrader_home }}"
+    home: "{{ metatrader_home | default('/home/' + metatrader_user) }}"
     shell: /bin/bash
     createhome: true
     state: present
