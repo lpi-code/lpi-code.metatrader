@@ -4,6 +4,7 @@
   ansible.builtin.setup:
     gather_subset:
       - all
+      
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: yes
@@ -92,7 +93,7 @@
     password: "{{ metatrader_password | password_hash('sha512') }}"
     group: "{{ metatrader_group }}"
     home: "{{ metatrader_home }}"
-    shell: /bin/bash
+    shell: "{{ '/bin/bash' if not metatrader_restricted else '/bin/false' }}"
     createhome: true
     state: present
 
