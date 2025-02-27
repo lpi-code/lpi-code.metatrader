@@ -40,7 +40,6 @@
       Exec=/usr/local/bin/main_script.sh
       TryExec=/usr/local/bin/main_script.sh
       Type=Application
-  when: not desktop_files.matched
 
 - name: Ensure the main script is executable
   file:
