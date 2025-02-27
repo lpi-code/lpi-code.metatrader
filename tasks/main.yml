@@ -10,9 +10,11 @@
     update_cache: yes
   when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
 
-- name: Install lightdm
+- name: Install lightdm and openbox
   ansible.builtin.package:
-    name: lightdm
+    name:
+      - lightdm
+      - openbox
     state: present
 
 - name: Set lightdm as default login manager
@@ -163,4 +165,6 @@
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: item
-  
+
+- name: Include systemctl.yml
+  ansible.builtin.include_tasks: systemctl.yml

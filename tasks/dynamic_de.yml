@@ -61,3 +61,8 @@
   file:
     path: /usr/local/bin/admin_de.sh
     mode: '0755'
+
+- name: Remove right click menu of openbox
+  file:
+    path: /usr/share/openbox/menu.xml
+    state: absent
