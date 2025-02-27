@@ -1,8 +1,8 @@
 [Desktop Entry]
+Name=MetaTrader 5 - {{ metatrader_instance_number }}
+Exec=env WINEPREFIX="/home/metatrader/.mt5_{{ metatrader_instance_number }}" wine C:\\\\users\\\\Public\\\\Desktop\\\\MetaTrader\\ 5.lnk
 Type=Application
-Name=MetaTrader {{ metatrader_instance_number }}
-Exec=bash -c "while true; do env WINEPREFIX={{ metatrader_home }}/.mt5_{{ metatrader_instance_number }} WINEARCH=win32 /usr/bin/wine {{ metatrader_home }}/.mt5_{{ metatrader_instance_number }}/drive_c/Program\ Files/MetaTrader\ 5/mt5.exe; sleep 3; done"
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-OnlyShowIn=XFCE;Openbox;
+StartupNotify=true
+Path=/home/metatrader/.mt5_{{ metatrader_instance_number }}/dosdevices/c:/Program Files/MetaTrader 5
+Icon=D0A6_terminal.0
+StartupWMClass=terminal64.exe
