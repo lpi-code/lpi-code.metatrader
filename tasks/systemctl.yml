@@ -12,15 +12,8 @@
     owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
     mode: '0644'
-    content: |
-      [Desktop Entry]
-      Type=Application
-      Name=MetaTrader {{ metatrader_instance_number }}
-      Exec=bash -c "while true; do env WINEPREFIX={{ metatrader_home }}/.mt5_{{ metatrader_instance_number }} WINEARCH=win32 /usr/bin/wine {{ metatrader_home }}/.mt5_{{ metatrader_instance_number }}/drive_c/Program\ Files/MetaTrader\ 5/mt5.exe; sleep 3; done"
-      Hidden=false
-      NoDisplay=false
-      X-GNOME-Autostart-enabled=true
-      OnlyShowIn=XFCE;Openbox;
+    src: autostart.desktop.j2
+     
 
 - name: Ensure xfce4 session autostart is enabled
   ansible.builtin.lineinfile:
