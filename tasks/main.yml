@@ -82,6 +82,11 @@
     metatrader_home: "/home/{{ metatrader_user }}"
   when: metatrader_home is not defined
 
+
+- name: Set metatrader group
+  ansible.builtin.set_fact:
+    metatrader_group: "{{ metatrader_user }}"
+  when: metatrader_group is not defined
 - name: Create home directory
   ansible.builtin.file:
     path: "{{ metatrader_home }}"
@@ -89,11 +94,6 @@
     owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
     mode: '0755'
-
-- name: Set metatrader group
-  ansible.builtin.set_fact:
-    metatrader_group: "{{ metatrader_user }}"
-  when: metatrader_group is not defined
 
 - name: Create group
   ansible.builtin.group:
