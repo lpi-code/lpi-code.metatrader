@@ -19,7 +19,7 @@
 
 - name: Copy restricted DE script
   copy:
-    src: files/admin_de.sh
+    src: files/restricted_de.sh
     dest: /usr/local/bin/restricted_de.sh
     mode: '0755'
 
