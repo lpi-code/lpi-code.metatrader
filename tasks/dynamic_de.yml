@@ -62,7 +62,21 @@
     path: /usr/local/bin/admin_de.sh
     mode: '0755'
 
-- name: Remove right click menu of openbox
+- name: Remove Openbox menu configuration file
   file:
-    path: /usr/share/openbox/menu.xml
+    path: "{{ item }}"
     state: absent
+  with_items:
+    - /etc/xdg/openbox/menu.xml
+    - ~/.config/openbox/menu.xml
+
+- name: Ensure Openbox autostart directory exists
+  file:
+    path: ~/.config/openbox
+    state: directory
+
+- name: Create an empty autostart file to prevent menu from being generated
+  copy:
+    content: ""
+    dest: ~/.config/openbox/autostart
+    force: yes
