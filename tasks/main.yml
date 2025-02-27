@@ -102,6 +102,14 @@
     createhome: true
     state: present
 
+- name: Add user to restricted group
+  ansible.builtin.group:
+    name: "{{ metatrader_restricted_group }}"
+    state: present
+    append: true
+    groups: "{{ metatrader_user }}"
+  when: metatrader_restricted
+
 - name: Create Deskop folder
   ansible.builtin.file:
     dest: "{{ metatrader_home }}/Desktop"
@@ -171,4 +179,3 @@
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: metatrader_instance_number
-
