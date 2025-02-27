@@ -171,4 +171,4 @@
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: metatrader_instance_number
-    
+

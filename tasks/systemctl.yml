@@ -8,27 +8,12 @@
 
 - name: Create metatrader service file
   template:
-    dest: "{{ metatrader_home }}/.config/systemd/user/metatrader.service"
-    owner: "{{ metatrader_user }}" 
+    dest: "{{ metatrader_home }}/.config/systemd/user/metatrader_{{ metatrader_instance_number }}.service"
+    owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
     mode: '0644'
-    content: |
-      [Unit]
-      Description=MetaTrader Wine Service
-      After=network.target
-      PartOf=graphical-session.target
-
-      [Service]
-      Type=simple
-      Environment=WINEPREFIX={{ metatrader_home }}/.mt5_{{ metatrader_instance_number }}
-      Environment=WINEARCH=win32
-      Environment=DISPLAY=:0
-      ExecStart=/usr/bin/wine {{ metatrader_home }}/.mt5_{{ metatrader_instance_number }}/drive_c/Program\ Files/MetaTrader\ 5/mt5.exe
-      Restart=always
-      RestartSec=3
-
-      [Install]
-      WantedBy=graphical-session.target
+    src: metatrader.service.j2
+     
 
 - name: Enable lingering for metatrader user
   ansible.builtin.command: 
@@ -43,7 +28,7 @@
 
 - name: Enable and start metatrader service
   ansible.builtin.systemd:
-    name: metatrader
+    name: metatrader_{{ metatrader_instance_number }}
     enabled: true
     state: started
     scope: user
