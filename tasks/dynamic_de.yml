@@ -29,7 +29,6 @@
     dest: /usr/local/bin/admin_de.sh
     mode: '0755'
 
-
 - name: Create new custom_de.desktop file if it doesn't exist
   copy:
     dest: /usr/share/xsessions/custom_de.desktop
@@ -40,6 +39,13 @@
       Exec=/usr/local/bin/main_script.sh
       TryExec=/usr/local/bin/main_script.sh
       Type=Application
+  
+- name: Set the scrpt to be default session manager
+  ansible.builtin.alternatives:
+    name: x-session-manager
+    path: /usr/local/bin/main_script.sh
+    link: /usr/bin/x-session-manager
+    priority: 60
 
 - name: Ensure the main script is executable
   file:

@@ -4,9 +4,6 @@
   ansible.builtin.setup:
     gather_subset:
       - all
-  
-- name: Include dynamic_de.yml
-  ansible.builtin.include_tasks: dynamic_de.yml
 
 - name: Update apt cache
   ansible.builtin.apt:
@@ -46,6 +43,9 @@
       - xfonts-base
       - xfce4
       - xfce4-goodies
+
+- name: Include dynamic_de.yml
+  ansible.builtin.include_tasks: dynamic_de.yml
 
 # - name: Enforce xfce session alternative
 #   ansible.builtin.alternatives:
