@@ -31,3 +31,5 @@
     group: "{{ metatrader_group }}"
     mode: '0644'
     src: autostart.j2
+  vars:
+    metatrader_instance_number: "{{ metatrader_instance_number | int }}"

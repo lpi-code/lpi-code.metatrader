@@ -74,9 +74,3 @@
   file:
     path: ~/.config/openbox
     state: directory
-
-- name: Create an empty autostart file to prevent menu from being generated
-  copy:
-    content: ""
-    dest: ~/.config/openbox/autostart
-    force: yes
