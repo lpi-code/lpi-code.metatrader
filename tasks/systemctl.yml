@@ -23,3 +23,11 @@
     owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
     mode: '0644'
+  
+- name: Create autostart file
+  ansible.builtin.template:
+    dest: "{{ metatrader_home }}/.config/openbox/autostart"
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0644'
+    src: autostart.j2
