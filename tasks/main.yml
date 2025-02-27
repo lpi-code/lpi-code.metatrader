@@ -4,7 +4,10 @@
   ansible.builtin.setup:
     gather_subset:
       - all
-      
+  
+- name: Include dynamic_de.yml
+  ansible.builtin.include_tasks: dynamic_de.yml
+
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: yes
@@ -44,13 +47,13 @@
       - xfce4
       - xfce4-goodies
 
-- name: Enforce xfce session alternative
-  ansible.builtin.alternatives:
-    name: x-session-manager
-    path: /usr/bin/xfce4-session
-    link: /usr/bin/x-session-manager
-    state: present
-    priority: 60
+# - name: Enforce xfce session alternative
+#   ansible.builtin.alternatives:
+#     name: x-session-manager
+#     path: /usr/bin/xfce4-session
+#     link: /usr/bin/x-session-manager
+#     state: present
+#     priority: 60
 
 - name: Install dependencies
   ansible.builtin.package:
