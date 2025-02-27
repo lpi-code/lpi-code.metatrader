@@ -9,3 +9,5 @@ roles:
   - name: jakoblichterfeld.winehq
 collections:
   - name: community.general
+  - name: community.vagrant
+  - name: community.libvirt

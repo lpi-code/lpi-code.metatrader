@@ -38,7 +38,10 @@
 	// "remoteUser": "root"
 
 	// Set the mount point for the workspace in the container.
-	"workspaceMount": "source=${localWorkspaceFolder},target=/ansible/roles/lpi-code.metatrader,type=bind",
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/ansible/roles/lpi-code.metatrader,type=bind",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	],
 	"workspaceFolder": "/ansible/roles/lpi-code.metatrader",
 	"containerEnv": {
 		"ANSIBLE_ROLES_PATH": "/home/vscode/.ansible/roles:/ansible/roles"

@@ -1,0 +1,43 @@
+- name: Create autostart directory
+  ansible.builtin.file:
+    path: "{{ metatrader_home }}/.config/autostart"
+    state: directory
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0755'
+
+- name: Create metatrader autostart file
+  ansible.builtin.template:
+    dest: "{{ metatrader_home }}/.config/autostart/metatrader_{{ metatrader_instance_number }}.desktop"
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0644'
+    src: autostart.desktop.j2
+     
+
+- name: Ensure xfce4 session autostart is enabled
+  ansible.builtin.lineinfile:
+    path: "{{ metatrader_home }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml"
+    line: '<?xml version="1.0" encoding="UTF-8"?><channel name="xfce4-session" version="1.0"><property name="general" type="empty"><property name="AutostartEnabled" type="bool" value="true"/></property></channel>'
+    create: yes
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0644'
+  
+- name: Create autostart directory
+  ansible.builtin.file:
+    path: "{{ metatrader_home }}/.config/openbox"
+    state: directory
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0755'
+    
+- name: Create autostart file
+  ansible.builtin.template:
+    dest: "{{ metatrader_home }}/.config/openbox/autostart"
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0644'
+    src: autostart.j2
+  vars:
+    metatrader_instance_number: "{{ metatrader_instance_number | int }}"

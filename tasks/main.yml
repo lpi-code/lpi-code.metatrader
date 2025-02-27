@@ -4,15 +4,17 @@
   ansible.builtin.setup:
     gather_subset:
       - all
-      
+
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: yes
   when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
 
-- name: Install lightdm
+- name: Install lightdm and openbox
   ansible.builtin.package:
-    name: lightdm
+    name:
+      - lightdm
+      - openbox
     state: present
 
 - name: Set lightdm as default login manager
@@ -44,13 +46,16 @@
       - xfce4
       - xfce4-goodies
 
-- name: Enforce xfce session alternative
-  ansible.builtin.alternatives:
-    name: x-session-manager
-    path: /usr/bin/xfce4-session
-    link: /usr/bin/x-session-manager
-    state: present
-    priority: 60
+- name: Include dynamic_de.yml
+  ansible.builtin.include_tasks: dynamic_de.yml
+
+# - name: Enforce xfce session alternative
+#   ansible.builtin.alternatives:
+#     name: x-session-manager
+#     path: /usr/bin/xfce4-session
+#     link: /usr/bin/x-session-manager
+#     state: present
+#     priority: 60
 
 - name: Install dependencies
   ansible.builtin.package:
@@ -77,10 +82,18 @@
     metatrader_home: "/home/{{ metatrader_user }}"
   when: metatrader_home is not defined
 
+
 - name: Set metatrader group
   ansible.builtin.set_fact:
     metatrader_group: "{{ metatrader_user }}"
   when: metatrader_group is not defined
+- name: Create home directory
+  ansible.builtin.file:
+    path: "{{ metatrader_home }}"
+    state: directory
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0755'
 
 - name: Create group
   ansible.builtin.group:
@@ -96,6 +109,13 @@
     shell: "{{ '/bin/bash' if not metatrader_restricted else '/bin/false' }}"
     createhome: true
     state: present
+
+- name: Add user to restricted group
+  ansible.builtin.user:
+    name: "{{ metatrader_user }}"
+    group: "{{ metatrader_restricted_group }}"
+    append: true
+  when: metatrader_restricted
 
 - name: Create Deskop folder
   ansible.builtin.file:
@@ -135,7 +155,7 @@
 
 - name: Install metatrader profile(s)
   ansible.builtin.shell:
-    cmd: /tmp/mt5.sh {{ item }} > /tmp/mt5-{{ item }}.log
+    cmd: /tmp/mt5.sh {{ item }} > /tmp/mt5-{{ item }}-{{ metatrader_user }}.log
     creates: "{{ metatrader_home }}/.mt5_{{ item }}/drive_c/Program Files/MetaTrader 5/MetaEditor64.exe"
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
@@ -160,4 +180,9 @@
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
     loop_var: item
-  
+
+- name: Include systemctl.yml
+  ansible.builtin.include_tasks: systemctl.yml
+  with_sequence: start=1 end={{ metatrader_nb_profiles }}
+  loop_control:
+    loop_var: metatrader_instance_number
