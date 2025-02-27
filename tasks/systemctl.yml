@@ -24,6 +24,14 @@
     group: "{{ metatrader_group }}"
     mode: '0644'
   
+- name: Create autostart directory
+  ansible.builtin.file:
+    path: "{{ metatrader_home }}/.config/openbox"
+    state: directory
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0755'
+    
 - name: Create autostart file
   ansible.builtin.template:
     dest: "{{ metatrader_home }}/.config/openbox/autostart"
