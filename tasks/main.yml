@@ -168,3 +168,6 @@
 
 - name: Include systemctl.yml
   ansible.builtin.include_tasks: systemctl.yml
+  loop: "{{ metatrader_nb_profiles }}"
+  loop_control:
+    loop_var: metatrader_instance_number
