@@ -103,11 +103,10 @@
     state: present
 
 - name: Add user to restricted group
-  ansible.builtin.group:
-    name: "{{ metatrader_restricted_group }}"
-    state: present
+  ansible.builtin.user:
+    name: "{{ metatrader_user }}"
+    group: "{{ metatrader_restricted_group }}"
     append: true
-    groups: "{{ metatrader_user }}"
   when: metatrader_restricted
 
 - name: Create Deskop folder
