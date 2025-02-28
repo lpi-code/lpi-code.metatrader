@@ -9,7 +9,7 @@ unset XAUTHORITY
 unset XDG_RUNTIME_DIR
 
 # Set environment to Windows 10
-WINEPREFIX=$WINEPREFIX winetricks -q win10
+WINEPREFIX=$WINEPREFIX winetricks -q win10 || true
 # Install WebView2 Runtime
 
 Xvfb :99 -screen 0 1024x768x24 -nolisten tcp &
