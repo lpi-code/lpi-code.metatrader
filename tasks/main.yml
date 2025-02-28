@@ -92,7 +92,6 @@
   ansible.builtin.group:
     name: "{{ metatrader_group }}"
     state: present
-  
 
 
 - name: Add users
@@ -113,6 +112,11 @@
     group: "{{ metatrader_group }}"
     mode: '0755'
   ignore_errors: true
+
+- name: Create restricted group
+  ansible.builtin.group:
+    name: "{{ metatrader_restricted_group }}"
+    state: present
 
 - name: Add user to restricted group
   ansible.builtin.user:
