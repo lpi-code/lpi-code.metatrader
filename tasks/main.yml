@@ -65,6 +65,14 @@
       - wget
     state: present
 
+- name: Create polkit directory
+  ansible.builtin.file:
+    path: /etc/polkit-1/localauthority/50-local.d
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
 - name: Install xrdp
   ansible.builtin.include_role:
     name: robertdebock.xrdp
