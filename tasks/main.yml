@@ -83,6 +83,12 @@
     regexp: '^max_bpp=32'
     replace: 'max_bpp=24'
 
+- name: install xorg extensions
+  ansible.builtin.package:
+    name:
+      - xorgxrdp
+    state: present
+  when: ansible_distribution == 'Debian'
 
 
 - name: Set metatrader_home
@@ -141,6 +147,12 @@
     group: "{{ metatrader_group }}"
     mode: '0755'
 
+- name: Download WineHQ GPG key
+  ansible.builtin.get_url:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+    dest: /usr/share/keyrings/winehq-archive.key
+    mode: '0644'
+
 - name: Install winehq
   ansible.builtin.include_role:
     name: jakoblichterfeld.winehq
@@ -150,6 +162,7 @@
       install_winetricks: true
       use_devel: false
       use_staging: false
+      gpg_key_path: /usr/share/keyrings/winehq-archive.key
 
 - name: Download metatrader installer and webview
   ansible.builtin.get_url:
