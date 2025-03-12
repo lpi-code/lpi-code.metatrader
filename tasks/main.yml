@@ -63,18 +63,6 @@
     mode: '0755'
   ignore_errors: true
 
-- name: Create restricted group
-  ansible.builtin.group:
-    name: "{{ metatrader_restricted_group }}"
-    state: present
-
-- name: Add user to restricted group
-  ansible.builtin.user:
-    name: "{{ metatrader_user }}"
-    group: "{{ metatrader_restricted_group }}"
-    append: true
-  when: metatrader_restricted
-
 - name: Create Deskop folder
   ansible.builtin.file:
     dest: "{{ metatrader_home }}/Desktop"
