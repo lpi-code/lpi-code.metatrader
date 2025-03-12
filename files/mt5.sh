@@ -12,7 +12,7 @@ unset XDG_RUNTIME_DIR
 WINEPREFIX=$WINEPREFIX winetricks -q win10 || true
 # Install WebView2 Runtime
 
-Xvfb :99 -screen 0 1024x768x24 -nolisten tcp &
+Xvfb :99 -screen 0 5000x5000x24 -nolisten tcp &
 sleep 5
 export DISPLAY=:99.0
 export XDG_RUNTIME_DIR=$WINEPREFIX
