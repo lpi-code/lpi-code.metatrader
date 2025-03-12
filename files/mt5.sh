@@ -15,6 +15,10 @@ WINEPREFIX=$WINEPREFIX winetricks -q win10 || true
 Xvfb :99 -screen 0 1024x768x24 -nolisten tcp &
 sleep 5
 export DISPLAY=:99.0
+export XDG_RUNTIME_DIR=$WINEPREFIX
+export WINEPREFIX=$WINEPREFIX
+export WINEDEBUG=-all
+WINEPREFIX=$WINEPREFIX XDG_RUNTIME_DIR=$WINEPREFIX DISPLAY=$DISPLAY winecfg -v=win10
 
 WINEPREFIX=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/MicrosoftEdgeWebview2Setup.exe /silent /install
 # Start MetaTrader installer
