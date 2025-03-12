@@ -28,3 +28,4 @@ WINEPREFIX=$WINEPREFIX XDG_RUNTIME_DIR=$WINEPREFIX DISPLAY=$DISPLAY wine /tmp/mt
 cd $HOME/Desktop
 mv 'MetaEditor 5.desktop' "MetaEditor 5 - $1.desktop"
 mv 'MetaTrader 5.desktop' "MetaTrader 5 - $1.desktop"
+kill %1
