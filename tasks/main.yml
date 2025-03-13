@@ -115,7 +115,7 @@
     loop_var: item
   become: true
   become_user: "{{ metatrader_user }}"
-  
+
 - name: Edit desktop shortcut for Trader to include name
   ansible.builtin.template:
     dest: "{{ metatrader_home }}/Desktop/MetaTrader 5 - {{ item }}.desktop"
@@ -123,6 +123,9 @@
     group: "{{ metatrader_group }}"
     mode: '0644'
     src: autostart.desktop.j2
+  with_sequence: start=1 end={{ metatrader_nb_profiles }}
+  loop_control:
+    loop_var: item
 
 - name: Include systemctl.yml
   ansible.builtin.include_tasks: systemctl.yml
