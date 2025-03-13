@@ -121,7 +121,7 @@
     dest: "{{ metatrader_home }}/Desktop/MetaTrader 5 - {{ metatrader_instance_number }}.desktop"
     owner: "{{ metatrader_user }}"
     group: "{{ metatrader_group }}"
-    mode: '0644'
+    mode: '0755'
     src: autostart.desktop.j2
   with_sequence: start=1 end={{ metatrader_nb_profiles }}
   loop_control:
