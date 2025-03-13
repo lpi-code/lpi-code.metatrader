@@ -115,24 +115,14 @@
     loop_var: item
   become: true
   become_user: "{{ metatrader_user }}"
-
-- name: Edit desktop shortcut for Editor to include name
-  ansible.builtin.replace:
-    path: "{{ metatrader_home }}/Desktop/MetaEditor 5 - {{ item }}.desktop"
-    regexp: 'Name=MetaEditor 5'
-    replace: 'Name=MetaEditor 5 - {{ item }}'
-  with_sequence: start=1 end={{ metatrader_nb_profiles }}
-  loop_control:
-    loop_var: item
-
+  
 - name: Edit desktop shortcut for Trader to include name
-  ansible.builtin.replace:
-    path: "{{ metatrader_home }}/Desktop/MetaTrader 5 - {{ item }}.desktop"
-    regexp: 'Name=MetaTrader 5'
-    replace: 'Name=MetaTrader 5 - {{ item }}'
-  with_sequence: start=1 end={{ metatrader_nb_profiles }}
-  loop_control:
-    loop_var: item
+  ansible.builtin.template:
+    dest: "{{ metatrader_home }}/Desktop/MetaTrader 5 - {{ item }}.desktop"
+    owner: "{{ metatrader_user }}"
+    group: "{{ metatrader_group }}"
+    mode: '0644'
+    src: autostart.desktop.j2
 
 - name: Include systemctl.yml
   ansible.builtin.include_tasks: systemctl.yml
