@@ -30,33 +30,33 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: |
         pyinstaller --onefile port_knocker.py
-        mv dist/port_knocker.exe dist/YourAppName.exe
+        mv dist/port_knocker.exe dist/PortKnocker.exe
 
     - name: Build macOS DMG
       if: matrix.os == 'macos-latest'
       run: |
         python setup.py py2app
-        hdiutil create -volname YourAppName -srcfolder dist -ov -format UDZO dist/YourAppName.dmg
+        hdiutil create -volname PortKnocker -srcfolder dist -ov -format UDZO dist/PortKnocker.dmg
 
     - name: Upload Windows executable
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: YourAppName-windows
-        path: dist/YourAppName.exe
+        name: PortKnocker-windows
+        path: dist/PortKnocker.exe
 
     - name: Upload macOS DMG
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: YourAppName-macos
-        path: dist/YourAppName.dmg
+        name: PortKnocker-macos
+        path: dist/PortKnocker.dmg
 
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          dist/YourAppName.exe
-          dist/YourAppName.dmg
+          dist/PortKnocker.exe
+          dist/PortKnocker.dmg
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
